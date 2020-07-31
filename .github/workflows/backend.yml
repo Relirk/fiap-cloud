@@ -31,12 +31,12 @@ jobs:
           aws-session-token: ${{secrets.AWS_SECURITY_TOKEN}}
           aws-region: us-east-1
 
-      - name: Prepare npm cache
-        id: npm_cache
-        uses: actions/cache@v1
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+      # - name: Prepare npm cache
+      #   id: npm_cache
+      #   uses: actions/cache@v1
+      #   with:
+      #     path: node_modules
+      #     key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
      
       # ********************* Install
       - name: Installing dependencies
