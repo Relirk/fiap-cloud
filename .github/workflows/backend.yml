@@ -12,57 +12,59 @@ jobs:
     name: Deploy FIAP Cloud API
     runs-on: ubuntu-latest
 
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
-      with:
-        ref: master
-        node-version: 12
-        
-    # ********************* Setup AWS
-    - name: Configure AWS credentials
-      id: aws-credentials
-      if: success()
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
 
-    - name: Prepare npm cache
-      id: npm_cache
-      uses: actions/cache@v1
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-  
-    # ********************* Install
-    - name: Installing dependencies
-      id: install
-      if: success()
-      # if: steps.npm_cache.outputs.cache-hit != 'true'
-      run: |
-        cd backend
-        npm ci
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          ref: master
+          node-version: 12
+          
+      # ********************* Setup AWS
+      - name: Configure AWS credentials
+        id: aws-credentials
+        if: success()
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
 
-    - name: Setting SSH
-      run: |
-        mkdir /root/.ssh
-        printf "Host *\n\tStrictHostKeyChecking no" > /root/.ssh/config
-        echo '${{secrets.SSH_PROJECT_PRIVATE}}' > /root/.ssh/id_rsa
-        chmod 400 /root/.ssh/*
+      - name: Prepare npm cache
+        id: npm_cache
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
     
-    # ********************* Build
-    - name: Building structure
-      id: build
-      if: success()
-      run: |
-        rm -rf dist
-        npm run build
+      # ********************* Install
+      - name: Installing dependencies
+        id: install
+        if: success()
+        # if: steps.npm_cache.outputs.cache-hit != 'true'
+        run: |
+          cd backend
+          npm ci
 
-    # ********************* Deploy Prod
-    - name: Deploy 
+      - name: Setting SSH
+        run: |
+          mkdir /root/.ssh
+          printf "Host *\n\tStrictHostKeyChecking no" > /root/.ssh/config
+          echo '${{secrets.SSH_PROJECT_PRIVATE}}' > /root/.ssh/id_rsa
+          chmod 400 /root/.ssh/*
+      
+      # ********************* Build
+      - name: Building structure
+        id: build
         if: success()
         run: |
-          cd tools
-          ./backend_deploy.sh
-          echo "commit $(git rev-parse HEAD) published successfully"
+          rm -rf dist
+          npm run build
+
+      # ********************* Deploy Prod
+      - name: Deploy 
+          if: success()
+          run: |
+            cd tools
+            ./backend_deploy.sh
+            echo "commit $(git rev-parse HEAD) published successfully"

@@ -28,7 +28,7 @@ docker image build \
 echo "########################## Built image ##########################"
 
 aws ecr create-repository --region us-east-1 --repository-name ${PROJECT_NAME} >& /dev/null || echo 'Image repository already exists on aws (probably)'
-$(aws ecr get-login --no-include-email --region sa-east-1)
+$(aws ecr get-login --no-include-email --region us-east-1)
 export IMAGE_NAME=$(aws ecr describe-repositories --repository-names $PROJECT_NAME --output text --region us-east-1 --query 'repositories[*].repositoryUri')
 docker image tag $PROJECT_NAME:latest $IMAGE_NAME:latest
 docker image tag $PROJECT_NAME:latest $IMAGE_NAME:$IMAGE_TAG
