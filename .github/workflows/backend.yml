@@ -63,8 +63,8 @@ jobs:
 
       # ********************* Deploy Prod
       - name: Deploy 
-          if: success()
-          run: |
-            cd tools
-            ./backend_deploy.sh
-            echo "commit $(git rev-parse HEAD) published successfully"
+        if: success()
+        run: |
+          cd tools
+          ./backend_deploy.sh
+          echo "commit $(git rev-parse HEAD) published successfully"
