@@ -8,15 +8,6 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x, 14.x]
-
-jobs:
   deploy-beta-job:
     name: Deploy FIAP Cloud API
     runs-on: ubuntu-latest
