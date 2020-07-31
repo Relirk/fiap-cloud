@@ -1,0 +1,29 @@
+header#main-header {
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+header#main-header .header-content {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 30px 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+header#main-header .header-content h1 {
+  width: 100%;
+  margin-bottom: 14px;
+  margin-top: 20px;
+  font-size: 4em;
+  font-weight: 400;
+}
+
+header#main-header .header-content p {
+  width: 100%;
+  font-size: 2em;
+}
