@@ -34,34 +34,7 @@ jobs:
           privateKey: ${{ secrets.FIAP_SSH_KEY }}
           command: |
             pm2 list
-
-      # ********************* Setup AWS
-      # - name: Launch AWS EC2
-      #   id: aws-credentials
-      #   if: success()
-      #   run: |
-      #     ssh -T
-      #     npm install pm2@latest -g
-      #     ls -lah
-
-      # ********************* Install
-      - name: Installing dependencies
-        id: install
-        if: success()
-        run: |
-          cd backend
-          npm ci
-      # ********************* Build
-      # - name: Building structure
-      #   id: build
-      #   if: success()
-      #   run: |
-      #     rm -rf dist
-      #     npm run build
-      # ********************* Deploy Prod
-      # - name: Deploy
-      #   if: success()
-      #   run: |
-      #     cd tools
-      #     ./backend_deploy.sh
-      #     echo "commit $(git rev-parse HEAD) published successfully"
+            cd backend
+            git pull
+            yarn
+            pm2 restart 0
