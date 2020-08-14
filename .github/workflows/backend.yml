@@ -33,10 +33,7 @@ jobs:
         if: success()
         run: |
           ls -lah
-          curl https://firebasestorage.googleapis.com/v0/b/portifoil-bcd7d.appspot.com/o/fiap.pem\?alt\=media\&token\=ee0a94df-5670-4ca9-b6a9-4111b3ec8be1-s --output key.pem
-          chmod 400 key.pem
-          ls -lah
-          ssh -T -i "key.pem" ubuntu@ec2-54-157-139-9.compute-1.amazonaws.com
+          ssh -T  ubuntu@ec2-54-157-139-9.compute-1.amazonaws.com
 
       # ********************* Install
       - name: Installing dependencies
