@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node dist/index.js",
-    "build": "sucrase ./src -d ./dist --transforms imports"
+    "build": "rm -rf dist && sucrase ./src -d ./dist --transforms imports"
   },
   "dependencies": {
     "cors": "^2.8.5",

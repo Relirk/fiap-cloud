@@ -1,1 +1,1 @@
-web: cd backend && rm -rf dist && yarn build && yarn start
+web: cd backend && yarn build && yarn start
