@@ -9,12 +9,6 @@ const app = express();
 
 const server = require("http").Server(app);
 
-const options = {
-  key: fs.readFileSync("key.pem"),
-  cert: fs.readFileSync("cert.pem"),
-};
-const httpsServer = require("https").Server(options, app);
-
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
 
 app.use(
@@ -28,5 +22,4 @@ app.use(morgan("dev"));
 
 app.use(require("./routes"));
 
-server.listen(process.env.PORT);
-httpsServer.listen(443);
+server.listen(process.env.PORT || 3000);
