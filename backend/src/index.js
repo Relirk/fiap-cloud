@@ -10,7 +10,11 @@ const server = require("http").Server(app);
 
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://fiap-cloud-git-master.relirk.vercel.app",
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
