@@ -27,15 +27,22 @@ jobs:
           known_hosts: ${{ secrets.FIAP_KNOWN_HOSTS }}
           # config: ${{ secrets.CONFIG }} # ssh_config; optional
 
+      - name: Execute SSH commmands on remote server
+        uses: JimCronqvist/action-ssh@master
+        with:
+          hosts: "ubuntu@ec2-54-157-139-9.compute-1.amazonaws.com"
+          privateKey: ${{ secrets.FIAP_SSH_KEY }}
+          command: |
+            pm2 list
+
       # ********************* Setup AWS
-      - name: Launch AWS EC2
-        id: aws-credentials
-        if: success()
-        run: |
-          ssh -T ubuntu@ec2-54-157-139-9.compute-1.amazonaws.com
-          npm install pm2@latest -g
-          ls -lah
-          pm2 list
+      # - name: Launch AWS EC2
+      #   id: aws-credentials
+      #   if: success()
+      #   run: |
+      #     ssh -T
+      #     npm install pm2@latest -g
+      #     ls -lah
 
       # ********************* Install
       - name: Installing dependencies
