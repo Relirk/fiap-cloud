@@ -7,7 +7,7 @@ routes.get("/", (req, res) => {
   return res.json({
     name: "fiap-cloud-api",
     status: "up",
-    server: "Nginx Subiu",
+    server: "Nginx",
     EC2_Instance: "i-05eda5c5eb499d94a",
     EC2_Security_Group: "launch-wizard-3",
   });
