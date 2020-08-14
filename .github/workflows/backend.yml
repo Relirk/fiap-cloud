@@ -36,7 +36,8 @@ jobs:
           privateKey: ${{ secrets.FIAP_SSH_KEY }}
           command: |
             pm2 list
-            cd backend
+            cd app/fiap-cloud/backend/
             git pull
             yarn
+            yarn build
             pm2 restart 0
