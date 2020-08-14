@@ -20,14 +20,16 @@ jobs:
           node-version: 12
 
       - name: Install SSH key
+        id: set-private-key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.FIAP_SSH_KEY }}
-          name: id_rsa # optional
+          name: id_rsa
           known_hosts: ${{ secrets.FIAP_KNOWN_HOSTS }}
-          # config: ${{ secrets.CONFIG }} # ssh_config; optional
 
       - name: Execute SSH commmands on remote server
+        id: ec2-commands
+        if: success()
         uses: JimCronqvist/action-ssh@master
         with:
           hosts: "ubuntu@ec2-54-157-139-9.compute-1.amazonaws.com"
