@@ -3,10 +3,17 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const fs = require("fs");
 
 const app = express();
 
 const server = require("http").Server(app);
+
+const options = {
+  key: fs.readFileSync("key.pem"),
+  cert: fs.readFileSync("cert.pem"),
+};
+const httpsServer = require("https").Server(options, app);
 
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
 
@@ -21,4 +28,5 @@ app.use(morgan("dev"));
 
 app.use(require("./routes"));
 
-server.listen(process.env.PORT || 3000);
+server.listen(process.env.PORT);
+httpsServer.listen(443);
