@@ -32,9 +32,8 @@ jobs:
         id: aws-credentials
         if: success()
         run: |
-          ls -lah
           ssh -T ubuntu@ec2-54-157-139-9.compute-1.amazonaws.com
-          ls -lah
+          pm2 list
 
       # ********************* Install
       - name: Installing dependencies
