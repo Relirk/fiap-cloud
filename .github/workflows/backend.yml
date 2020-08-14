@@ -33,6 +33,7 @@ jobs:
         if: success()
         run: |
           ssh -T ubuntu@ec2-54-157-139-9.compute-1.amazonaws.com
+          npm install pm2@latest -g
           ls -lah
           pm2 list
 
