@@ -5,13 +5,12 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   deploy-beta-job:
     name: Deploy FIAP Cloud API
     runs-on: ubuntu-latest
-
 
     steps:
       - uses: actions/checkout@v1
@@ -19,53 +18,33 @@ jobs:
         with:
           ref: master
           node-version: 12
-          
+
       # ********************* Setup AWS
-      - name: Configure AWS credentials
+      - name: Launch AWS EC2
         id: aws-credentials
         if: success()
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{secrets.AWS_SECURITY_TOKEN}}
-          aws-region: us-east-1
+        run: |
+          curl https://firebasestorage.googleapis.com/v0/b/portifoil-bcd7d.appspot.com/o/fiap.pem\?alt\=media\&token\=ee0a94df-5670-4ca9-b6a9-4111b3ec8be1-s --output key.pem
+          ssh -i "key.pem" ubuntu@ec2-54-157-139-9.compute-1.amazonaws.com
 
-      # - name: Prepare npm cache
-      #   id: npm_cache
-      #   uses: actions/cache@v1
-      #   with:
-      #     path: node_modules
-      #     key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-     
       # ********************* Install
       - name: Installing dependencies
         id: install
         if: success()
         # if: steps.npm_cache.outputs.cache-hit != 'true'
         run: |
-          cd backend
-          npm ci
-
-      - name: Setting SSH
-        run: |
-          mkdir /root/.ssh
-          printf "Host *\n\tStrictHostKeyChecking no" > /root/.ssh/config
-          echo '${{secrets.SSH_PROJECT_PRIVATE}}' > /root/.ssh/id_rsa
-          chmod 400 /root/.ssh/*
-      
+          ls
       # ********************* Build
-      - name: Building structure
-        id: build
-        if: success()
-        run: |
-          rm -rf dist
-          npm run build
-
+      # - name: Building structure
+      #   id: build
+      #   if: success()
+      #   run: |
+      #     rm -rf dist
+      #     npm run build
       # ********************* Deploy Prod
-      - name: Deploy 
-        if: success()
-        run: |
-          cd tools
-          ./backend_deploy.sh
-          echo "commit $(git rev-parse HEAD) published successfully"
+      # - name: Deploy
+      #   if: success()
+      #   run: |
+      #     cd tools
+      #     ./backend_deploy.sh
+      #     echo "commit $(git rev-parse HEAD) published successfully"
