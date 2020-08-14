@@ -33,7 +33,8 @@ jobs:
         if: success()
         run: |
           ls -lah
-          ssh -T  ubuntu@ec2-54-157-139-9.compute-1.amazonaws.com
+          ssh -T ubuntu@ec2-54-157-139-9.compute-1.amazonaws.com
+          ls -lah
 
       # ********************* Install
       - name: Installing dependencies
