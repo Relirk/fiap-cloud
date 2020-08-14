@@ -33,15 +33,16 @@ jobs:
         if: success()
         run: |
           ssh -T ubuntu@ec2-54-157-139-9.compute-1.amazonaws.com
+          ls -lah
           pm2 list
 
       # ********************* Install
       - name: Installing dependencies
         id: install
         if: success()
-        # if: steps.npm_cache.outputs.cache-hit != 'true'
         run: |
-          ls
+          cd backend
+          npm ci
       # ********************* Build
       # - name: Building structure
       #   id: build
