@@ -15,7 +15,7 @@
   <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen">
 </p>
 
-Projeto para conclusão da disciplina de Cloud Foundation, ministrada em julho de 2020
+Projeto para conclusão da disciplina de Cloud Foundation, ministrada em agosto de 2020
 
 ![FIAP](fiap_mba.png)
 
