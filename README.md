@@ -20,5 +20,5 @@ Projeto para conclusão da disciplina de Cloud Foundation, ministrada em julho d
 ![FIAP](fiap_mba.png)
 
 As descriçãoes e tutoriais referentes a cada projeto estão em:
-[Tutorial front-end](https://github.com/Relirk/fiap-cloud/tree/master/frontend)
-[Tutorial back-end](https://github.com/Relirk/fiap-cloud/tree/master/backend)
+- [Tutorial front-end](https://github.com/Relirk/fiap-cloud/tree/master/frontend)
+- [Tutorial back-end](https://github.com/Relirk/fiap-cloud/tree/master/backend)
